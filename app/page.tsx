@@ -1,103 +1,202 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState } from "react";
+import { useAuth } from "@/utils/authContext";  // Ajusta ruta si es necesario
+import MarketOverview from "../components/widgets/MarketOverview";
+import MarketQuotes from "../components/widgets/MarketQuotes";
+import TradingViewWidget from "../components/widgets/TradingViewWidget";
+
+export default function HomePage() {
+  const { user, isLoggedIn } = useAuth();
+  const [accordionOpen, setAccordionOpen] = useState(false);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      <div style={{ color: '#fff' }}>
+        <main className="container py-4">
+          {/* Presentación principal */}
+          <section
+            id="presentation"
+            className="container py-5 text-center"
+            style={{ color: "#DBDBDB" }}
+          >
+            <h1 className="display-4 mb-3">Inversia Trading Inteligente con IA</h1>
+            <p className="lead mb-4">
+              Bienvenido a Inversia, la plataforma de trading del futuro donde la inteligencia artificial hace el trabajo duro por ti. 
+              Olvídate de pasar horas analizando gráficos y noticias; nuestra IA monitorea el mercado 24/7, detecta oportunidades y riesgos en tiempo real, 
+              tomando decisiones estratégicas basadas en datos y tendencias globales. Tú solo estableces tus parámetros y observas cómo tu inversión crece de forma inteligente y segura.
+            </p>
+          </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          {/* Acordeón con info y entornos */}
+          <section className="container my-5">
+            <div className="accordion" id="infoAccordion" style={{ color: "#DBDBDB" }}>
+              <div className="accordion-item bg-dark border-secondary">
+                <h2 className="accordion-header" id="headingOne">
+                  <button
+                    className="accordion-button collapsed bg-dark text-light"
+                    type="button"
+                    onClick={() => setAccordionOpen(!accordionOpen)}
+                    aria-expanded={accordionOpen}
+                    aria-controls="collapseOne"
+                  >
+                    Entornos de Inversia
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  className={`accordion-collapse collapse ${accordionOpen ? "show" : ""}`}
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#infoAccordion"
+                >
+                  <div className="accordion-body bg-secondary text-light">
+                    <p>
+                      <strong>Modo Real:</strong> Operaciones en tiempo real con dinero auténtico. Nuestra IA monitorea el mercado y ejecuta inversiones basándose en los parámetros que configures, asegurando las mejores decisiones en tu capital real.
+                    </p>
+                    <a href="/real" className="btn btn-success me-3 mb-3">Probar Entorno Real</a>
+
+                    <p>
+                      <strong>Modo Prueba:</strong> Un entorno seguro donde puedes experimentar sin riesgo. La IA simula inversiones con datos reales para que evalúes su desempeño y optimices tus estrategias antes de operar con dinero real.
+                    </p>
+                    <a href="/prueba" className="btn btn-warning mb-3">Probar Entorno de Prueba</a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="accordion-item bg-dark border-secondary">
+                <h2 className="accordion-header" id="headingTwo">
+                  <button
+                    className="accordion-button collapsed bg-dark text-light"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo"
+                  >
+                    ¿Qué es Inversia?
+                  </button>
+                </h2>
+                <div
+                  id="collapseTwo"
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingTwo"
+                  data-bs-parent="#infoAccordion"
+                >
+                  <div className="accordion-body bg-secondary text-light">
+                    Inversia es una plataforma revolucionaria de trading que combina la potencia de la inteligencia artificial con el análisis en tiempo real del mercado financiero global. 
+                    A diferencia de otros servicios, Inversia no solo analiza números: nuestra IA incorpora el "ruido del mercado" — noticias, opiniones, eventos sociales y campañas de marketing — 
+                    para anticipar movimientos y proteger tu inversión. El objetivo es que inviertas con confianza y maximices tus ganancias sin tener que ser un experto.
+                  </div>
+                </div>
+              </div>
+
+              <div className="accordion-item bg-dark border-secondary">
+                <h2 className="accordion-header" id="headingThree">
+                  <button
+                    className="accordion-button collapsed bg-dark text-light"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree"
+                  >
+                    ¿Cómo lo hacemos?
+                  </button>
+                </h2>
+                <div
+                  id="collapseThree"
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingThree"
+                  data-bs-parent="#infoAccordion"
+                >
+                  <div className="accordion-body bg-secondary text-light">
+                    En Inversia, nuestra IA trabaja las 24 horas como un experto trader que nunca descansa. Rastrea datos bursátiles y noticias en tiempo real, evaluando riesgos y oportunidades según tus preferencias. 
+                    Puedes configurar estrategias conservadoras o agresivas, y la IA optimiza el crecimiento de tu capital. Además, ofrecemos entornos de prueba y real para que inviertas con confianza y seguridad.
+                  </div>
+                </div>
+              </div>
+
+              <div className="accordion-item bg-dark border-secondary">
+                <h2 className="accordion-header" id="headingFour">
+                  <button
+                    className="accordion-button collapsed bg-dark text-light"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour"
+                    aria-expanded="false"
+                    aria-controls="collapseFour"
+                  >
+                    Novedades frente a la competencia
+                  </button>
+                </h2>
+                <div
+                  id="collapseFour"
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingFour"
+                  data-bs-parent="#infoAccordion"
+                >
+                  <div className="accordion-body bg-secondary text-light">
+                    Lo que hace único a Inversia es su capacidad para analizar no solo cifras financieras sino también información externa — campañas, polémicas, eventos virales — que afectan directamente el valor de las acciones. 
+                    Esta visión integral permite reaccionar a tiempo a cambios repentinos y proteger tu inversión como ninguna otra plataforma.
+                  </div>
+                </div>
+              </div>
+
+              <div className="accordion-item bg-dark border-secondary">
+                <h2 className="accordion-header" id="headingFive">
+                  <button
+                    className="accordion-button collapsed bg-dark text-light"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseFive"
+                    aria-expanded="false"
+                    aria-controls="collapseFive"
+                  >
+                    ¿Por qué elegirnos?
+                  </button>
+                </h2>
+                <div
+                  id="collapseFive"
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingFive"
+                  data-bs-parent="#infoAccordion"
+                >
+                  <div className="accordion-body bg-secondary text-light">
+                    Elegir Inversia significa apostar por la tranquilidad y la eficiencia. Nuestra IA trabaja para ti, minimizando riesgos y maximizando oportunidades en mercados volátiles. No necesitas experiencia previa: nosotros hacemos el análisis complejo, tú solo supervisas resultados y creces tu capital con seguridad y confianza.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="mb-5">
+            <h2 className="mb-3" style={{ color: "#DBDBDB" }}>
+              Empresas Destacadas
+            </h2>
+            <div style={{ width: '100%', height: '400px', overflow: 'hidden' }}>
+              <TradingViewWidget />
+            </div>
+          </section>
+
+          <section className="mb-5">
+            <h2 className="mb-3" style={{ color: "#DBDBDB" }}>
+              Visión del Mercado
+            </h2>
+            <div style={{ width: '100%', height: '550px', overflow: 'hidden' }}>
+              <MarketOverview />
+            </div>
+          </section>
+
+          <section className="mb-5">
+            <h2 className="mb-3" style={{ color: "#DBDBDB" }}>
+              Resumen del Mercado
+            </h2>
+            <div style={{ width: '100%', height: '550px', overflow: 'hidden' }}>
+              <MarketQuotes />
+            </div>
+          </section>
+        </main>
+      </div>
+    </>
   );
 }
